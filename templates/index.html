@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Recommendation System</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Suggestly</h1>
+        <p>Type a game name to get recommendations:</p>
+
+        <input type="text" id="gameInput" placeholder="Enter a game title" oninput="fetchGameSuggestions()">
+        <div id="gameSuggestions" style="border: 1px solid #ccc; max-height: 200px; overflow-y: auto; display: none;">
+        </div>
+
+        <button onclick="getGameRecommendations()">Get Recommendations</button>
+        <div id="gameRecommendations"></div>
+    </div>
+
+    <script>
+        async function fetchGameSuggestions() {
+            const input = document.getElementById("gameInput").value;
+            const suggestionsDiv = document.getElementById("gameSuggestions");
+
+            if (input.trim() === "") {
+                suggestionsDiv.style.display = "none";
+                return;
+            }
+
+            const response = await fetch(`/get_titles?q=${encodeURIComponent(input)}`);
+            const data = await response.json();
+
+            if (data.titles && data.titles.length > 0) {
+                suggestionsDiv.innerHTML = data.titles.map(title =>
+                    `<div onclick="selectGameSuggestion('${title}')">${title}</div>`
+                ).join('');
+                suggestionsDiv.style.display = "block";
+            } else {
+                suggestionsDiv.innerHTML = "<p>No suggestions found.</p>";
+                suggestionsDiv.style.display = "block";
+            }
+        }
+
+        function selectGameSuggestion(title) {
+            const input = document.getElementById("gameInput");
+            input.value = title; // Update input field
+            document.getElementById("gameSuggestions").style.display = "none"; // Hide suggestions
+        }
+
+        async function getGameRecommendations() {
+            const gameTitle = document.getElementById("gameInput").value;
+            const response = await fetch("/recommend_games", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ game_title: gameTitle })
+            });
+
+            const data = await response.json();
+            const recommendationsDiv = document.getElementById("gameRecommendations");
+
+            if (data.recommendations) {
+                console.log(data.recommendations)
+                recommendationsDiv.innerHTML = `<h2>Recommendations:</h2>
+                    <div class="recommendations-container">${data.recommendations.map(game => `
+                            <div class="game-card">
+                                <img src="${game.image}" alt="${game.title}" style="width: 150px; height: auto;">
+                                <p>${game.title}</p>
+                            </div>
+                        `).join('')}
+                    </div>`;
+            } else {
+                recommendationsDiv.innerHTML = "<p>No recommendations found.</p>";
+            }
+        }
+    </script>
+</body>
+
+</html>
