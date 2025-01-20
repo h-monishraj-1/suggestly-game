@@ -11,3 +11,19 @@ data/
 *.log
 *.tmp
 *.bak
+
+
+# Ignore environment files
+.env
+node_modules/
+dist/
+build/
+
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyo
+*.pyd
+*.ipynb_checkpoints/
