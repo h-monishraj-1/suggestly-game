@@ -85,10 +85,10 @@ button:hover {
 }
 
 #suggestions {
-    border: none; /* Removes any border */
-    background-color: rgba(25, 25, 35, 0.9); /* Ensures consistent background */
-    border-radius: 8px; /* Optional: Adds rounded corners for a sleek look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow */
+    border: none; 
+    background-color: rgba(25, 25, 35, 0.9); 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 #suggestions div {
@@ -129,12 +129,12 @@ button:hover {
 
 #gameSuggestions {
     border: 1px solid #ccc;
-    max-height: 200px; /* Limit to five items (adjust as needed based on item height) */
-    overflow-y: auto; /* Enables scrolling for additional items */
-    background-color: rgba(25, 25, 35, 0.9); /* Consistent dropdown background */
-    border-radius: 8px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for dropdown */
-    display: none; /* Initially hidden */
+    max-height: 200px; 
+    overflow-y: auto; 
+    background-color: rgba(25, 25, 35, 0.9);
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
 }
 
 #gameSuggestions div {
